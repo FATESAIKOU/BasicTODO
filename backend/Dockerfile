@@ -1,7 +1,10 @@
-FROM openjdk:21-jdk-slim AS build
+FROM gradle:jdk21-corretto AS build
 WORKDIR /app
-COPY backend/build.gradle backend/settings.gradle ./
-COPY backend/src ./src
+COPY gradlew .
+COPY gradle gradle
+COPY src src
+COPY build.gradle .
+COPY settings.gradle .
 RUN ./gradlew build -x test
 
 FROM openjdk:21-jdk-slim
