@@ -1,7 +1,7 @@
 services:
-  backend:
+  web:
     build:
-      context: ./backend
+      context: .
       dockerfile: ./Dockerfile
     ports:
       - "8080:8080"
@@ -9,14 +9,3 @@ services:
       - DATABASE_PATH=/data/todos.json
     volumes:
       - ./backend/src/main/resources/todos.json:/data/todos.json
-
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: ./Dockerfile
-    ports:
-      - "3000:3000"
-    depends_on:
-      - backend
-    environment:
-      - VITE_API_URL=http://backend:8080
