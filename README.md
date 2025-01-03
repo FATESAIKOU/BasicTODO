@@ -1,105 +1,89 @@
-# TODO Application
+# Basic TODO Application
 
-This is a simple TODO application built with a Spring Boot backend and a React frontend. The application allows users to manage their TODO items through a RESTful API and a user-friendly interface.
+## Overview
+This is a basic TODO application with a backend and frontend. The backend is built with Java and Spring Boot, and the frontend is built with React.
+
+## Prerequisites
+- Docker
+- Docker Compose
+- Java 21+
+- Node.js 14+
 
 ## Project Structure
-
 ```
-todo-app
-├── backend                # Spring Boot backend
-│   ├── src
-│   │   ├── main
-│   │   │   ├── java
-│   │   │   │   └── com
-│   │   │   │       └── example
-│   │   │   │           └── todo
-│   │   │   │               ├── TodoApplication.java
-│   │   │   │               ├── controller
-│   │   │   │               │   └── TodoController.java
-│   │   │   │               ├── model
-│   │   │   │               │   └── Todo.java
-│   │   │   │               └── service
-│   │   │   │                   └── TodoService.java
-│   │   │   ├── resources
-│   │   │       ├── application.properties
-│   │   │       └── todos.json
-│   ├── build.gradle
-│   └── settings.gradle
-├── frontend               # React frontend
-│   ├── src
-│   │   ├── App.jsx
-│   │   ├── components
-│   │   │   └── TodoList.jsx
-│   │   ├── index.css
-│   │   └── main.jsx
-│   ├── index.html
-│   ├── package.json
-│   ├── vite.config.js
-│   └── vitest.config.js
-├── docker-compose.yml     # Docker Compose configuration
-├── Dockerfile.backend      # Dockerfile for backend
-├── Dockerfile.frontend     # Dockerfile for frontend
-└── README.md              # Project documentation
+basicTODO/
+├── backend/
+│   ├── src/
+│   ├── target/
+│   ├── application.properties
+│   └── pom.xml
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   ├── dist/
+│   └── package.json
+├── docker-compose.yml
+└── README.md
 ```
 
-## Getting Started
+## Backend Configuration
+The backend configuration is specified in the `application.properties` file located in the `backend` directory.
 
-### Prerequisites
-
-- Java 21
-- Gradle
-- Node.js
-- Docker and Docker Compose
-
-### Backend Setup
-
-1. Navigate to the `backend` directory.
-2. Build the backend application using Gradle:
-   ```
-   ./gradlew build
-   ```
-3. Run the application:
-   ```
-   ./gradlew bootRun
-   ```
-
-### Frontend Setup
-
-1. Navigate to the `frontend` directory.
-2. Install the dependencies:
-   ```
-   npm install
-   ```
-3. Start the development server:
-   ```
-   npm run dev
-   ```
-
-### Docker Setup
-
-To run the application using Docker, use the following command in the root directory of the project:
-
+### application.properties
+```properties
+server.port=8080
+service.data-file-path=./data/todos.json
+spring.web.resources.static-locations=file:./frontend/dist/
+spring.jackson.serialization.indent_output=true
 ```
+
+## Frontend Configuration
+The frontend configuration is specified in the `package.json` file located in the `frontend` directory.
+
+## Docker Configuration
+The Docker configuration is specified in the `docker-compose.yml` file located in the root directory.
+
+### docker-compose.yml
+```yaml
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - SERVICE_DATA-FILE-PATH=/data/todos.json
+    volumes:
+      - ./data/todos.json:/data/todos.json
+```
+
+## Running the Application
+To run the application, use Docker Compose:
+
+```sh
 docker-compose up --build
 ```
 
-### Environment Variables
+This will start the services.
 
-You can modify the file path for the JSON database by setting the `DATABASE_PATH` environment variable in the Docker environment.
+## Building the Frontend
+To build the frontend, navigate to the `frontend` directory and run:
 
-## Usage
-
-- Access the frontend application at `http://localhost:3000`.
-- Use the provided API endpoints to manage TODO items.
-
-## Testing
-
-The frontend includes unit tests using Vitest. To run the tests, navigate to the `frontend` directory and execute:
-
-```
-npm run test
+```sh
+npm install
+npm run build
 ```
 
-## License
+The build artifacts will be stored in the `frontend/dist` directory.
 
-This project is licensed under the MIT License.
+## Building the Backend
+To build the backend, navigate to the `backend` directory and run:
+
+```sh
+./gradle build
+```
+
+The build artifacts will be stored in the `backend/target` directory.
