@@ -1,3 +1,4 @@
 backend/.gradle/*
 backend/bin
 backend/build
+frontend/node_modules
