@@ -8,4 +8,4 @@ services:
     environment:
       - SERVICE_DATA-FILE-PATH=/data/todos.json
     volumes:
-      - ./backend/src/main/resources/todos.json:/data/todos.json
+      - ./data/todos.json:/data/todos.json
