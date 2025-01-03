@@ -1,3 +1,5 @@
+package com.example.todo.model;
+
 public class Todo {
     private Long id;
     private String title;

@@ -1,9 +1,14 @@
+package com.example.todo.controller;
+
+import com.example.todo.model.Todo;
+import com.example.todo.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/todos")
@@ -30,8 +35,9 @@ public class TodoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Todo> updateTodo(@PathVariable Long id, @RequestBody Todo todo) {
-        Todo updatedTodo = todoService.updateTodo(id, todo);
-        return new ResponseEntity<>(updatedTodo, HttpStatus.OK);
+        Optional<Todo> updatedTodo = todoService.updateTodo(id, todo);
+        return updatedTodo.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                          .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @DeleteMapping("/{id}")
