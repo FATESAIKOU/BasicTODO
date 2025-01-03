@@ -36,9 +36,19 @@ public class TodoRepositoryJsonImpl implements TodoRepository {
     @Override
     public Todo save(Todo todo) {
         List<Todo> todos = findAll();
+        if (todo.getId() == null) {
+            todo.setId(generateId(todos));
+        }
         todos.add(todo);
         writeTodos(todos);
         return todo;
+    }
+
+    private Long generateId(List<Todo> todos) {
+        return todos.stream()
+                .mapToLong(Todo::getId)
+                .max()
+                .orElse(0L) + 1;
     }
 
     @Override
