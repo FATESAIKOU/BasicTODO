@@ -4,10 +4,12 @@ import com.example.todo.model.Todo;
 import com.example.todo.repository.TodoRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +17,15 @@ import java.util.List;
 @Repository
 public class TodoRepositoryJsonImpl implements TodoRepository {
 
-    private final String filePath = System.getenv().getOrDefault("TODO_FILE_PATH", "src/main/resources/todos.json");
+    @Value("${service.data-file-path}")
+    private String dataFilePath;
+
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public List<Todo> findAll() {
         try {
-            String content = new String(Files.readAllBytes(Paths.get(filePath)));
+            String content = new String(Files.readAllBytes(getDataFilePath()));
             return objectMapper.readValue(content, new TypeReference<List<Todo>>() {});
         } catch (IOException e) {
             e.printStackTrace();
@@ -52,9 +56,13 @@ public class TodoRepositoryJsonImpl implements TodoRepository {
     private void writeTodos(List<Todo> todos) {
         try {
             String content = objectMapper.writeValueAsString(todos);
-            Files.write(Paths.get(filePath), content.getBytes());
+            Files.write(getDataFilePath(), content.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private Path getDataFilePath() {
+        return Paths.get(dataFilePath);
     }
 }
