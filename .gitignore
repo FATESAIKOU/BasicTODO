@@ -1,6 +1,7 @@
 backend/.gradle/*
 backend/bin
 backend/build
+backend/config
 frontend/node_modules
 frontend/dist
 data
