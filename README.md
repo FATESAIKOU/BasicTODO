@@ -13,16 +13,24 @@ This is a basic TODO application with a backend and frontend. The backend is bui
 ```
 basicTODO/
 ├── backend/
+│   ├── .gradle/
+│   ├── bin/
+│   ├── build/
+│   ├── gradle/
 │   ├── src/
-│   ├── target/
-│   ├── application.properties
-│   └── pom.xml
+│   ├── build.gradle
+│   ├── gradlew
+│   └── settings.gradle
 ├── frontend/
-│   ├── public/
-│   ├── src/
 │   ├── dist/
-│   └── package.json
+│   ├── src/
+│   ├── index.html
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── vite.config.js
+│   └── vitest.config.js
 ├── docker-compose.yml
+├── Dockerfile
 └── README.md
 ```
 
