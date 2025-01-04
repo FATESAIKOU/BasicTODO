@@ -23,14 +23,14 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-tasks.register("getGraalVMConfigWithTest", Test) {
+tasks.register("getNativeConfigWithTest", Test) {
     group = "verification"
     description = "Runs tests with native-image-agent to generate configuration files"
 
     useJUnitPlatform()
-    jvmArgs '-agentlib:native-image-agent=config-output-dir=./config'
+    jvmArgs '-agentlib:native-image-agent=config-output-dir=./native-config'
 
     doFirst {
-        file("./config").deleteDir()
+        file("./native-config").deleteDir()
     }
 }

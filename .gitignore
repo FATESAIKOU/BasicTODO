@@ -1,7 +1,7 @@
 backend/.gradle/*
 backend/bin
 backend/build
-backend/config
+backend/native-config
 frontend/node_modules
 frontend/dist
 data
