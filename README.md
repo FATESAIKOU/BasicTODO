@@ -77,6 +77,16 @@ docker-compose up --build
 
 This will start the services.
 
+## Running the Application(nativeBuild)
+To run the application(nativeBuild), use Docker Compose:
+
+```sh
+docker-compose -f docker-compose-graalvm.yml
+```
+
+Be careful that graalvm need at least 6GB memory to build native binary!
+Please ensure that your docker daemon launched with more than 6GB memory.
+
 ## Building the Frontend
 To build the frontend, navigate to the `frontend` directory and run:
 
